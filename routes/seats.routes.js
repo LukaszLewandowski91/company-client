@@ -19,19 +19,26 @@ router.route("/seats/:id").get((req, res) => {
 router.route("/seats").post((req, res) => {
   const { day, seat, client, email } = req.body;
 
-  const newElement = {
-    id: uuidv4(),
-    day,
-    seat,
-    client,
-    email,
-  };
+  const checkSeat = db.seats.some(
+    (elem) => elem.seat === parseInt(seat) && elem.day === parseInt(day)
+  );
+  if (!checkSeat) {
+    const newElement = {
+      id: uuidv4(),
+      day,
+      seat,
+      client,
+      email,
+    };
 
-  if (day && seat && client && email) {
-    db.seats.push(newElement);
-    res.json({ message: "OK" });
+    if (day && seat && client && email) {
+      db.seats.push(newElement);
+      res.json({ message: "OK" });
+    } else {
+      res.status(200).json({ message: "Error validation" });
+    }
   } else {
-    res.status(200).json({ message: "Error validation" });
+    res.status(200).json({ message: "The slot is already taken..." });
   }
 });
 
