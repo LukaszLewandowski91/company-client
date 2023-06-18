@@ -2,11 +2,6 @@
 # yarn lockfile v1
 
 
-"@lukasz91/randomid-generator@^1.0.1":
-  version "1.0.1"
-  resolved "https://registry.yarnpkg.com/@lukasz91/randomid-generator/-/randomid-generator-1.0.1.tgz#f35d7dfa520c4a8f676789eeb1028a0477de6108"
-  integrity sha512-GEQjjvYsiSBtyEQWJiwBTiLfJhWH5n8L+896bJCdEvrkw17aKRgHusTxbIsJZ6PkMOZIwF6Cm87cmvHmETjVOw==
-
 abbrev@1:
   version "1.1.1"
   resolved "https://registry.yarnpkg.com/abbrev/-/abbrev-1.1.1.tgz#f8f2c887ad10bf67f634f005b6987fed3179aac8"
