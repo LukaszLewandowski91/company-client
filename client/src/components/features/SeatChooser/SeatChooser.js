@@ -1,4 +1,5 @@
-import { useEffect } from "react";
+import io from "socket.io-client";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Button, Progress, Alert } from "reactstrap";
 import {
@@ -9,9 +10,15 @@ import {
 import "./SeatChooser.scss";
 
 const SeatChooser = ({ chosenDay, chosenSeat, updateSeat }) => {
+  const [socket, setSocket] = useState("");
   const dispatch = useDispatch();
   const seats = useSelector(getSeats);
   const requests = useSelector(getRequests);
+
+  useEffect(() => {
+    const newSocket = io(process.env.PORT || "http://localhost:8000/");
+    setSocket(newSocket);
+  }, []);
 
   useEffect(() => {
     dispatch(loadSeatsRequest());
