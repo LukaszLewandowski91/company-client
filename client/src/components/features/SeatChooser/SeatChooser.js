@@ -54,6 +54,8 @@ const SeatChooser = ({ chosenDay, chosenSeat, updateSeat }) => {
       );
   };
 
+  const freeSeats = 50 - seats.filter((item) => item.day === chosenDay).length;
+
   return (
     <div>
       <h3>Pick a seat</h3>
@@ -74,6 +76,7 @@ const SeatChooser = ({ chosenDay, chosenSeat, updateSeat }) => {
       {requests["LOAD_SEATS"] && requests["LOAD_SEATS"].error && (
         <Alert color="warning">Couldn't load seats...</Alert>
       )}
+      <p>Free Seats {freeSeats}/50</p>
     </div>
   );
 };
