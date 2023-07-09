@@ -11,6 +11,10 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(cors());
 // Serve static files from the React app
+app.use((req, res, next) => {
+  req.io = io;
+  next();
+});
 app.use(express.static(path.join(__dirname, "/client/build")));
 app.use("/api", testimonialsRoutes);
 app.use("/api", concertsRoutes);

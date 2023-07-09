@@ -34,6 +34,7 @@ router.route("/seats").post((req, res) => {
     if (day && seat && client && email) {
       db.seats.push(newElement);
       res.json({ message: "OK" });
+      req.io.emit("seatsUpdated", db.seats);
     } else {
       res.status(200).json({ message: "Error validation" });
     }

@@ -65,11 +65,11 @@ const OrderTicketForm = () => {
       setIsError(true);
     }
   };
-  useEffect(() => {
-    if (order.client !== "" && order.email !== "") {
-      dispatch(loadSeatsRequest());
-    }
-  }, [order.client, order.email]);
+  // useEffect(() => {
+  //   if (order.client !== "" && order.email !== "") {
+  //     dispatch(loadSeatsRequest());
+  //   }
+  // }, [order.client, order.email]);
 
   return (
     <Form className="order-ticket-form" onSubmit={submitForm}>

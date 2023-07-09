@@ -6,6 +6,7 @@ import {
   getSeats,
   loadSeatsRequest,
   getRequests,
+  loadSeats,
 } from "../../../redux/seatsRedux";
 import "./SeatChooser.scss";
 
@@ -17,16 +18,10 @@ const SeatChooser = ({ chosenDay, chosenSeat, updateSeat }) => {
 
   useEffect(() => {
     const newSocket = io(process.env.PORT || "http://localhost:8000/");
+    dispatch(loadSeatsRequest());
+    newSocket.on("seatsUpdated", (seatsData) => dispatch(loadSeats(seatsData)));
     setSocket(newSocket);
-  }, []);
-
-  useEffect(() => {
-    dispatch(loadSeatsRequest());
   }, [dispatch]);
-
-  setInterval(() => {
-    dispatch(loadSeatsRequest());
-  }, 120000);
 
   const isTaken = (seatId) => {
     return seats.some((item) => item.seat === seatId && item.day === chosenDay);
