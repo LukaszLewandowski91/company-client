@@ -1,73 +1,15 @@
 const express = require("express");
-const { v4: uuidv4 } = require("uuid");
 const router = express.Router();
-const db = require("./../db");
+const ConcertController = require("../controllers/concerts.controller");
 
-router.route("/concerts").get((req, res) => {
-  res.json(db.concerts);
-});
+router.get("/concerts", ConcertController.getAll);
 
-router.route("/concerts/:id").get((req, res) => {
-  const element = db.concerts.find((elem) => elem.id === req.params.id);
-  if (element) {
-    res.json(element);
-  } else {
-    res.json({ message: "Element not found" });
-  }
-});
+router.get("/concerts/:id", ConcertController.getById);
 
-router.route("/concerts").post((req, res) => {
-  const { performer, genre, price, day, image } = req.body;
+router.post("/concerts", ConcertController.addNew);
 
-  const newElement = {
-    id: uuidv4(),
-    performer,
-    genre,
-    price,
-    day,
-    image,
-  };
+router.put("/concerts/:id", ConcertController.update);
 
-  if (performer && genre && price && day && image) {
-    db.concerts.push(newElement);
-    res.json({ message: "OK" });
-  } else {
-    res.status(200).json({ message: "Error validation" });
-  }
-});
-
-router.route("/concerts/:id").put((req, res) => {
-  const { performer, genre, price, day, image } = req.body;
-
-  const element = db.concerts.find((elem) => elem.id === req.params.id);
-
-  if (performer && genre && price && day && image) {
-    if (element) {
-      element.performer = performer;
-      element.genre = genre;
-      element.price = price;
-      element.day = day;
-      element.image = image;
-
-      res.json({ message: "OK" });
-    } else {
-      res.status(404).json({ message: "Not found" });
-    }
-  } else {
-    res.status(200).json({ message: "Error validation" });
-  }
-});
-
-router.route("/concerts/:id").delete((req, res) => {
-  const elementIndex = db.concerts.findIndex(
-    (elem) => elem.id === req.params.id
-  );
-  if (elementIndex !== -1) {
-    db.concerts.splice(elementIndex, 1);
-    res.json({ message: "OK" });
-  } else {
-    res.status(404).json({ message: "Not found" });
-  }
-});
+router.delete("/concerts/:id", ConcertController.delete);
 
 module.exports = router;
