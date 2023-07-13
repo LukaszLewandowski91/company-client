@@ -1,76 +1,15 @@
 const express = require("express");
-const { v4: uuidv4 } = require("uuid");
 const router = express.Router();
-const db = require("./../db");
+const SeatController = require("../controllers/seats.controller");
 
-router.route("/seats").get((req, res) => {
-  res.json(db.seats);
-});
+router.get("/seats", SeatController.getAll);
 
-router.route("/seats/:id").get((req, res) => {
-  const element = db.seats.find((elem) => elem.id === req.params.id);
-  if (element) {
-    res.json(element);
-  } else {
-    res.json({ message: "Element not found" });
-  }
-});
+router.get("/seats/:id", SeatController.getById);
 
-router.route("/seats").post((req, res) => {
-  const { day, seat, client, email } = req.body;
+router.post("/seats", SeatController.addNew);
 
-  const checkSeat = db.seats.some(
-    (elem) => elem.seat === parseInt(seat) && elem.day === parseInt(day)
-  );
-  if (!checkSeat) {
-    const newElement = {
-      id: uuidv4(),
-      day,
-      seat,
-      client,
-      email,
-    };
+router.put("/seats/:id", SeatController.update);
 
-    if (day && seat && client && email) {
-      db.seats.push(newElement);
-      res.json({ message: "OK" });
-      req.io.emit("seatsUpdated", db.seats);
-    } else {
-      res.status(200).json({ message: "Error validation" });
-    }
-  } else {
-    res.status(200).json({ message: "The slot is already taken..." });
-  }
-});
-
-router.route("/seats/:id").put((req, res) => {
-  const { day, seat, client, email } = req.body;
-
-  const element = db.seats.find((elem) => elem.id === req.params.id);
-  if (day && seat && client && email) {
-    if (element) {
-      element.day = day;
-      element.seat = seat;
-      element.client = client;
-      element.email = email;
-
-      res.json({ message: "OK" });
-    } else {
-      res.status(404).json({ message: "Not found" });
-    }
-  } else {
-    res.status(200).json({ message: "Error validation" });
-  }
-});
-
-router.route("/seats/:id").delete((req, res) => {
-  const elementIndex = db.seats.findIndex((elem) => elem.id === req.params.id);
-  if (elementIndex !== -1) {
-    db.seats.splice(elementIndex, 1);
-    res.json({ message: "OK" });
-  } else {
-    res.status(404).json({ message: "Not found" });
-  }
-});
+router.delete("/seats/:id", SeatController.delete);
 
 module.exports = router;
