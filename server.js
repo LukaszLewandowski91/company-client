@@ -31,10 +31,16 @@ app.use((req, res) => {
   res.status(404).json({ message: "Not found" });
 });
 
-mongoose.connect(uri, {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-});
+const NODE_ENV = process.env.NODE_ENV;
+let dbUri = "";
+
+if (NODE_ENV === "production")
+  dbUri =
+    "mongodb+srv://lukasz:Kodilla2023@cluster0.sjmpwid.mongodb.net/NewWaveDB?retryWrites=true&w=majority";
+else if (NODE_ENV === "test") dbUri = "mongodb://localhost:27017/NewWaveDBtest";
+else dbUri = "mongodb://localhost:27017/NewWaveDB";
+
+mongoose.connect(dbUri, { useNewUrlParser: true, useUnifiedTopology: true });
 
 const db = mongoose.connection;
 
@@ -55,3 +61,5 @@ io.on("connection", (socket) => {
     console.log(`User ${socket.id} disconnect`);
   });
 });
+
+module.exports = server;
