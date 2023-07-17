@@ -34,9 +34,7 @@ app.use((req, res) => {
 const NODE_ENV = process.env.NODE_ENV;
 let dbUri = "";
 
-if (NODE_ENV === "production")
-  dbUri =
-    "mongodb+srv://lukasz:Kodilla2023@cluster0.sjmpwid.mongodb.net/NewWaveDB?retryWrites=true&w=majority";
+if (NODE_ENV === "production") uri;
 else if (NODE_ENV === "test") dbUri = "mongodb://localhost:27017/NewWaveDBtest";
 else dbUri = "mongodb://localhost:27017/NewWaveDB";
 
