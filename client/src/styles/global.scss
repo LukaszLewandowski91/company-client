@@ -1,6 +1,8 @@
-@import './settings.scss';
+@import "./settings.scss";
 
-*, *::before, *::after {
+*,
+*::before,
+*::after {
   box-sizing: border-box;
 }
 
@@ -17,7 +19,9 @@ body {
   min-height: 100vh;
 }
 
-a, a:hover, a:visited {
+a,
+a:hover,
+a:visited {
   text-decoration: none;
 }
 
@@ -26,4 +30,4 @@ a, a:hover, a:visited {
   min-height: calc(100vh - 14rem);
 }
 
-@import './typography.scss';
+@import "./typography.scss";
