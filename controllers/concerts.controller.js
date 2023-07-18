@@ -1,9 +1,11 @@
 const Concert = require("../models/concert.model");
 const Workshop = require("../models/workshop.model");
+const Seat = require("../models/seat.model");
 exports.getAll = async (req, res) => {
   try {
     const con = await Concert.find();
     const workshops = await Workshop.find();
+
     const updateConcerts = con.map((concert) => {
       const concertObj = concert.toObject();
       concertObj.workshops = workshops.filter(
