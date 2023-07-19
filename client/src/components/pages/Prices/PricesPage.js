@@ -53,7 +53,7 @@ const Prices = () => {
           <p>Price: {con.price}</p>
           <p>
             Workshops:
-            <span>{prepareWorkshop(con.workshops)}</span>
+            <span> {prepareWorkshop(con.workshops)}</span>
           </p>
         </div>
       ))}

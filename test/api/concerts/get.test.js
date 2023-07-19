@@ -39,24 +39,28 @@ describe("GET api/concerts", () => {
     );
     expect(res.status).to.be.equal(200);
     expect(res.body).to.be.an("array");
+    expect(res.body[0].performer).to.be.equal("Marcin Lewandowski");
     expect(res.body).to.not.be.null;
   });
   it("/:genre should return concerts by genre", async () => {
     const res = await request(server).get("/api/concerts/genre/Rock");
     expect(res.status).to.be.equal(200);
     expect(res.body).to.be.an("array");
+    expect(res.body[0].genre).to.be.equal("Rock");
     expect(res.body).to.not.be.null;
   });
   it("/:price_min/:price_max should return concerts by price", async () => {
     const res = await request(server).get("/api/concerts/price/20/30");
     expect(res.status).to.be.equal(200);
     expect(res.body).to.be.an("array");
+    expect(res.body[0].price).to.be.equal(21);
     expect(res.body).to.not.be.null;
   });
   it("/:day should return concerts by day", async () => {
     const res = await request(server).get("/api/concerts/day/3");
     expect(res.status).to.be.equal(200);
     expect(res.body).to.be.an("array");
+    expect(res.body[0].performer).to.be.equal("Robert Lewandowski");
     expect(res.body).to.not.be.null;
   });
 });
